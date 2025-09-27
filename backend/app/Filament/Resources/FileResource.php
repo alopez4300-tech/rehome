@@ -16,14 +16,19 @@ class FileResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // Add file fields here
+            \Filament\Forms\Components\TextInput::make('name')->required(),
+            \Filament\Forms\Components\TextInput::make('path')->required(),
+            \Filament\Forms\Components\TextInput::make('type'),
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            // Add file columns here
+            \Filament\Tables\Columns\TextColumn::make('id'),
+            \Filament\Tables\Columns\TextColumn::make('name'),
+            \Filament\Tables\Columns\TextColumn::make('type'),
+            \Filament\Tables\Columns\TextColumn::make('created_at')->dateTime(),
         ]);
     }
 }

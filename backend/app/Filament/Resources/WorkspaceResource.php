@@ -16,14 +16,18 @@ class WorkspaceResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // Add workspace fields here
+            \Filament\Forms\Components\TextInput::make('name')->required(),
+            \Filament\Forms\Components\Textarea::make('description'),
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            // Add workspace columns here
+            \Filament\Tables\Columns\TextColumn::make('id'),
+            \Filament\Tables\Columns\TextColumn::make('name'),
+            \Filament\Tables\Columns\TextColumn::make('description'),
+            \Filament\Tables\Columns\TextColumn::make('created_at')->dateTime(),
         ]);
     }
 }

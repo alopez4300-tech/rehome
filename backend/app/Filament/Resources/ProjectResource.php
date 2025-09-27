@@ -16,14 +16,27 @@ class ProjectResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // Add project fields here
+            \Filament\Forms\Components\TextInput::make('name')->required(),
+            \Filament\Forms\Components\Textarea::make('description'),
+            \Filament\Forms\Components\Select::make('status')
+                ->options([
+                    'in_progress' => 'In Progress',
+                    'paused' => 'Paused',
+                    'completed' => 'Completed',
+                    'archived' => 'Archived',
+                ])->required(),
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            // Add project columns here
-        ]);
+            \Filament\Tables\Columns\TextColumn::make('id'),
+            \Filament\Tables\Columns\TextColumn::make('name'),
+            \Filament\Tables\Columns\TextColumn::make('status')->badge(),
+            \Filament\Tables\Columns\TextColumn::make('created_at')->dateTime(),
+        ])
+        ->defaultSort('status')
+        ->groupBy('status');
     }
 }

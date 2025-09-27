@@ -16,14 +16,24 @@ class TaskResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // Add task fields here
+            \Filament\Forms\Components\TextInput::make('name')->required(),
+            \Filament\Forms\Components\Textarea::make('description'),
+            \Filament\Forms\Components\Select::make('status')
+                ->options([
+                    'open' => 'Open',
+                    'in_progress' => 'In Progress',
+                    'done' => 'Done',
+                ])->required(),
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            // Add task columns here
+            \Filament\Tables\Columns\TextColumn::make('id'),
+            \Filament\Tables\Columns\TextColumn::make('name'),
+            \Filament\Tables\Columns\TextColumn::make('status')->badge(),
+            \Filament\Tables\Columns\TextColumn::make('created_at')->dateTime(),
         ]);
     }
 }

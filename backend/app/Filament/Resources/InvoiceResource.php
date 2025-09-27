@@ -16,14 +16,20 @@ class InvoiceResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // Add invoice fields here
+            \Filament\Forms\Components\TextInput::make('number')->required(),
+            \Filament\Forms\Components\TextInput::make('amount')->required(),
+            \Filament\Forms\Components\TextInput::make('client_id')->required(),
         ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table->columns([
-            // Add invoice columns here
+            \Filament\Tables\Columns\TextColumn::make('id'),
+            \Filament\Tables\Columns\TextColumn::make('number'),
+            \Filament\Tables\Columns\TextColumn::make('amount'),
+            \Filament\Tables\Columns\TextColumn::make('client_id'),
+            \Filament\Tables\Columns\TextColumn::make('created_at')->dateTime(),
         ]);
     }
 }
