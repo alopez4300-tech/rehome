@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "include": [
+    ".storybook/**/*",
+    "**/*.stories.*",
+    "**/*.mdx"
+  ],
+  "exclude": ["node_modules"]
+}
