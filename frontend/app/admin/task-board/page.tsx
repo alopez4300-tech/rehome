@@ -1,0 +1,1 @@
+Create admin task board page that imports TaskBoard component.
