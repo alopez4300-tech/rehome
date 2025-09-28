@@ -1,5 +1,7 @@
 # 🎯 Development Status Summary
 
+**👉 See [DEVELOPMENT-WORKFLOW.md](./DEVELOPMENT-WORKFLOW.md) for the canonical development guide**
+
 ## ✅ Completed Setup
 
 ### Environment

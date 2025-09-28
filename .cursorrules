@@ -22,12 +22,15 @@
     }
   ],
   "instructions": [
+    "CRITICAL: Always use Ubuntu (WSL2) terminal for all commands - never PowerShell/CMD",
+    "READ FIRST: See DEVELOPMENT-WORKFLOW.md for complete development setup",
     "This is a full-stack Laravel + Next.js project called 'rehome'",
     "Backend: Laravel 12 with PHP 8.2+, Filament admin, Sanctum auth, SQLite database",
     "Frontend: Next.js 15 with TypeScript, Tailwind CSS, Storybook",
     "Package managers: Composer (PHP), pnpm (Node.js)",
     "Development: Support for Windows, WSL2, macOS, Linux, GitHub Codespaces",
-    "Key models: User, Project, Task, File, Comment with proper relationships",
-    "Use Filament for admin interfaces, follow Laravel best practices"
+    "Key models: User, Project, Task, File, Comment, Workspace, Invoice with relationships",
+    "Use Filament for admin interfaces, follow Laravel best practices",
+    "Quick start: bash scripts/dev-setup.sh then bash scripts/dev-start.sh"
   ]
 }

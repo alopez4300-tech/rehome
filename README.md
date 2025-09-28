@@ -1,59 +1,47 @@
-# Rehome
+# 🏠 Rehome
 
-A new project to get started.
+Full-stack project management application built with Laravel + Next.js.
 
-## Getting Started
+## 🚀 Quick Start
 
-This repository was initialized in GitHub Codespaces.
+**👉 [See DEVELOPMENT-WORKFLOW.md](./DEVELOPMENT-WORKFLOW.md) for complete setup instructions**
 
-## About
+### TL;DR for Developers
 
-More details about this project will be added here.
-
-## Development Setup
-
-### 🚀 Quick Start (WSL2 + VS Code)
-
-1. **Open in VS Code with WSL:**
-   ```bash
-   code .  # From project directory
+1. **Open in WSL2:**
+   ```powershell
+   cd C:\Users\alope\Documents\rehome && code .
    ```
-   
-2. **Verify WSL connection:** Look for "WSL: Ubuntu" in VS Code bottom-left
 
-3. **Run setup script (Ubuntu terminal only):**
+2. **Setup (Ubuntu terminal):**
    ```bash
-   chmod +x scripts/dev-setup.sh
    bash scripts/dev-setup.sh
    ```
 
-4. **Start development servers:**
+3. **Start servers:**
    ```bash
-   # Terminal 1 - Backend
-   cd backend && composer run dev
-   
-   # Terminal 2 - Frontend  
-   cd frontend && pnpm dev
+   bash scripts/dev-start.sh
    ```
 
-### Manual Setup
+4. **Access:**
+   - Frontend: http://localhost:3000
+   - Backend: http://localhost:8000
+   - Admin: http://localhost:8000/admin
 
-**Backend (Laravel):**
-```bash
-cd backend
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate --seed
-composer run dev
-```
+## 🛠️ Tech Stack
 
-**Frontend (Next.js):**
-```bash
-cd frontend
-pnpm install
-pnpm dev
-```
+- **Backend**: Laravel 12 + PHP 8.2+ + Filament v3 Admin
+- **Frontend**: Next.js 15 + TypeScript + Tailwind CSS
+- **Database**: SQLite (dev) with Laravel migrations
+- **Development**: WSL2 + Ubuntu (multi-IDE support)
+
+## 📋 Features
+
+- User authentication and authorization
+- Project management with tasks and files
+- Admin panel with Filament v3
+- Component library with Storybook
+- Cross-platform development (Windows/WSL2/macOS/Linux/Codespaces)
 
 ### Default URLs
 
