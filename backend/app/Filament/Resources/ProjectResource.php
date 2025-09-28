@@ -2,13 +2,13 @@
 namespace App\Filament\Resources;
 
 use Filament\Resources\Resource;
-use Filament\Resources\Forms\Form;
-use Filament\Resources\Tables\Table;
+use Filament\Forms\Form;
+use Filament\Tables\Table;
 use App\Models\Project;
 
 class ProjectResource extends Resource
 {
-    protected static string $model = Project::class;
+    protected static ?string $model = Project::class;
     protected static ?string $navigationIcon = 'heroicon-o-briefcase';
     protected static ?string $navigationGroup = 'Projects';
     protected static ?string $navigationLabel = 'Projects';
