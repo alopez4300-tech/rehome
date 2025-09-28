@@ -30,4 +30,13 @@ class WorkspaceResource extends Resource
             \Filament\Tables\Columns\TextColumn::make('created_at')->dateTime(),
         ]);
     }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => \Filament\Resources\Pages\ListRecords::route('/'),
+            'create' => \Filament\Resources\Pages\CreateRecord::route('/create'),
+            'edit' => \Filament\Resources\Pages\EditRecord::route('/{record}/edit'),
+        ];
+    }
 }

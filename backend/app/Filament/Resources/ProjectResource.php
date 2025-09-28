@@ -39,4 +39,13 @@ class ProjectResource extends Resource
         ->defaultSort('status')
         ->groupBy('status');
     }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => \Filament\Resources\Pages\ListRecords::route('/'),
+            'create' => \Filament\Resources\Pages\CreateRecord::route('/create'),
+            'edit' => \Filament\Resources\Pages\EditRecord::route('/{record}/edit'),
+        ];
+    }
 }
