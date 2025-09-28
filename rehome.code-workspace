@@ -6,15 +6,21 @@
         }
     ],
     "settings": {
-        "terminal.integrated.defaultProfile.windows": "Command Prompt",
+        "terminal.integrated.defaultProfile.windows": "Ubuntu (WSL)",
         "terminal.integrated.profiles.windows": {
             "WSL": {
                 "path": "wsl.exe",
-                "args": []
+                "args": ["-d", "Ubuntu"]
             }
         },
+        "terminal.integrated.defaultProfile.linux": "bash",
         "remote.extensionKind": {
             "ms-vscode.vscode-typescript-next": ["workspace"]
+        },
+        "remote.WSL.fileWatcher.polling": true,
+        "files.watcherExclude": {
+            "**/node_modules/**": true,
+            "**/vendor/**": true
         }
     },
     "extensions": {
