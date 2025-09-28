@@ -41,14 +41,54 @@ done
 
 echo "🚀 Starting Rehome development servers..."
 
+# Detect Codespaces
+IN_CODESPACES=false
+if [[ "${CODESPACES:-}" == "true" || -n "${CODESPACE_NAME:-}" ]]; then
+    IN_CODESPACES=true
+fi
+
+# Build external URLs when in Codespaces
+BACKEND_EXT_URL="http://localhost:8000"
+FRONTEND_EXT_URL="http://localhost:3000"
+STORYBOOK_EXT_URL="http://localhost:6006"
+if [[ "$IN_CODESPACES" == true && -n "${CODESPACE_NAME:-}" ]]; then
+    BACKEND_EXT_URL="https://${CODESPACE_NAME}-8000.app.github.dev"
+    FRONTEND_EXT_URL="https://${CODESPACE_NAME}-3000.app.github.dev"
+    STORYBOOK_EXT_URL="https://${CODESPACE_NAME}-6006.app.github.dev"
+fi
+
 # Function to start backend
 start_backend() {
     echo "🟡 Starting Laravel backend on port 8000..."
     cd backend
-    php artisan serve --host=0.0.0.0 --port=8000 &
+
+    if [[ "$IN_CODESPACES" == true ]]; then
+        # Use Codespaces-aware env so asset() & cookies work over the proxy
+        APP_URL="$BACKEND_EXT_URL" \
+        ASSET_URL="$BACKEND_EXT_URL" \
+        SESSION_DRIVER=database \
+        SESSION_SECURE_COOKIE=true \
+        TRUSTED_PROXIES="*" \
+        SANCTUM_STATEFUL_DOMAINS="${CODESPACE_NAME}-8000.app.github.dev,${CODESPACE_NAME}-3000.app.github.dev,localhost,127.0.0.1" \
+        php artisan serve --host=0.0.0.0 --port=8000 &
+    else
+        php artisan serve --host=0.0.0.0 --port=8000 &
+    fi
+
     BACKEND_PID=$!
     cd ..
     echo "Backend PID: $BACKEND_PID"
+
+    # Try to set the port public in Codespaces (best-effort)
+    if [[ "$IN_CODESPACES" == true ]]; then
+        if command -v gh >/dev/null 2>&1; then
+            (gh codespace ports visibility 8000:public -c "${CODESPACE_NAME}" >/dev/null 2>&1 && \
+             echo "🌐 Made port 8000 Public in Codespaces") || \
+             echo "ℹ️ Could not update port visibility automatically. Use the Ports panel to set 8000 -> Public."
+        else
+            echo "ℹ️ gh CLI not found. Use the Ports panel to set 8000 -> Public."
+        fi
+    fi
 }
 
 # Function to start frontend
@@ -107,13 +147,13 @@ echo "✅ Services started!"
 echo ""
 echo "📍 Service URLs:"
 if [ "$FRONTEND_ONLY" = false ]; then
-    echo "  🟡 Laravel Backend: http://localhost:8000"
+    echo "  🟡 Laravel Backend: $BACKEND_EXT_URL"
 fi
 if [ "$BACKEND_ONLY" = false ]; then
-    echo "  🔵 Next.js Frontend: http://localhost:3000"
+    echo "  🔵 Next.js Frontend: $FRONTEND_EXT_URL"
 fi
 if [ "$STORYBOOK" = true ]; then
-    echo "  📚 Storybook: http://localhost:6006"
+    echo "  📚 Storybook: $STORYBOOK_EXT_URL"
 fi
 echo ""
 echo "Press Ctrl+C to stop all services"
