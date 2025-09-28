@@ -6,14 +6,19 @@ use Filament\Pages\Dashboard as BaseDashboard;
 
 class Dashboard extends BaseDashboard
 {
-    protected static ?string $title = 'Home';
-    protected static ?string $navigationLabel = 'Home';
+    protected static ?string $title = 'Dashboard';
+    protected static ?string $navigationLabel = 'Dashboard';
     protected static ?string $navigationIcon = 'heroicon-o-home';
     
     public function getWidgets(): array
     {
         return [
-            // No widgets - just clean home page
+            \App\Filament\Widgets\StatsOverviewWidget::class,
         ];
+    }
+    
+    public function getColumns(): int|string|array
+    {
+        return 1;
     }
 }
