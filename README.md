@@ -10,25 +10,50 @@ This repository was initialized in GitHub Codespaces.
 
 More details about this project will be added here.
 
-## Developing in WSL2/macOS/Linux
+## Development Setup
 
-### Prerequisites
+### 🚀 Quick Start (WSL2 + VS Code)
 
-- Keep the repo in WSL Linux FS (e.g., `~/workspace`), not `/mnt/c`.
-- First-time setup:
-  - `bash scripts/bootstrap-linux.sh`
-  - Configure git for line endings:
-    ```
-    git config --global core.autocrlf false
-    git config --global core.safecrlf warn
-    git add --renormalize .
-    git commit -m "Normalize line endings to LF" # if changes exist
-    ```
+1. **Open in VS Code with WSL:**
+   ```bash
+   code .  # From project directory
+   ```
+   
+2. **Verify WSL connection:** Look for "WSL: Ubuntu" in VS Code bottom-left
 
-### Running Services
+3. **Run setup script (Ubuntu terminal only):**
+   ```bash
+   chmod +x scripts/dev-setup.sh
+   bash scripts/dev-setup.sh
+   ```
 
-- Backend: `cd backend && composer install && php artisan key:generate && php artisan migrate --seed && composer run dev`
-- Frontend: `cd frontend && pnpm install && pnpm dev`
+4. **Start development servers:**
+   ```bash
+   # Terminal 1 - Backend
+   cd backend && composer run dev
+   
+   # Terminal 2 - Frontend  
+   cd frontend && pnpm dev
+   ```
+
+### Manual Setup
+
+**Backend (Laravel):**
+```bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+composer run dev
+```
+
+**Frontend (Next.js):**
+```bash
+cd frontend
+pnpm install
+pnpm dev
+```
 
 ### Default URLs
 
