@@ -1,0 +1,29 @@
+{
+    "folders": [
+        {
+            "name": "rehome",
+            "path": "."
+        }
+    ],
+    "settings": {
+        "terminal.integrated.defaultProfile.windows": "Command Prompt",
+        "terminal.integrated.profiles.windows": {
+            "WSL": {
+                "path": "wsl.exe",
+                "args": []
+            }
+        },
+        "remote.extensionKind": {
+            "ms-vscode.vscode-typescript-next": ["workspace"]
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "ms-vscode-remote.remote-wsl",
+            "ms-vscode.vscode-typescript-next",
+            "biomejs.biome",
+            "bradlc.vscode-tailwindcss",
+            "ms-vscode.vscode-json"
+        ]
+    }
+}
