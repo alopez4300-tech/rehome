@@ -20,10 +20,16 @@
     "extensions": {
         "recommendations": [
             "ms-vscode-remote.remote-wsl",
+            "bmewburn.vscode-intelephense-client",
+            "onecentlin.laravel-blade",
+            "ryannaddy.laravel-artisan",
+            "amiralizadeh9480.laravel-extra-intellisense",
+            "bradlc.vscode-tailwindcss",
             "ms-vscode.vscode-typescript-next",
             "biomejs.biome",
-            "bradlc.vscode-tailwindcss",
-            "ms-vscode.vscode-json"
+            "christian-kohler.path-intellisense",
+            "GitHub.copilot",
+            "GitHub.copilot-chat"
         ]
     }
 }

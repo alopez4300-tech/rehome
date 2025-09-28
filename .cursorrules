@@ -1,0 +1,33 @@
+{
+  "rules": [
+    {
+      "type": "filesystem",
+      "path": "backend",
+      "description": "Laravel backend with PHP 8.2+, using Filament for admin panel, Sanctum for auth"
+    },
+    {
+      "type": "filesystem", 
+      "path": "frontend",
+      "description": "Next.js 15 frontend with TypeScript, Tailwind CSS, Storybook for components"
+    },
+    {
+      "type": "file",
+      "path": "composer.json",
+      "description": "PHP dependencies managed by Composer"
+    },
+    {
+      "type": "file",
+      "path": "package.json", 
+      "description": "Node.js dependencies managed by pnpm"
+    }
+  ],
+  "instructions": [
+    "This is a full-stack Laravel + Next.js project called 'rehome'",
+    "Backend: Laravel 12 with PHP 8.2+, Filament admin, Sanctum auth, SQLite database",
+    "Frontend: Next.js 15 with TypeScript, Tailwind CSS, Storybook",
+    "Package managers: Composer (PHP), pnpm (Node.js)",
+    "Development: Support for Windows, WSL2, macOS, Linux, GitHub Codespaces",
+    "Key models: User, Project, Task, File, Comment with proper relationships",
+    "Use Filament for admin interfaces, follow Laravel best practices"
+  ]
+}

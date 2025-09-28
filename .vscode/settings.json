@@ -1,0 +1,70 @@
+{
+  "php.validate.executablePath": "php",
+  "php.executablePath": "php",
+  "php.suggest.basic": false,
+  
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  
+  "tailwindCSS.includeLanguages": {
+    "typescript": "javascript",
+    "typescriptreact": "javascript"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+  
+  "files.associations": {
+    "*.blade.php": "blade",
+    "*.php": "php"
+  },
+  
+  "emmet.includeLanguages": {
+    "blade": "html",
+    "typescript": "html",
+    "typescriptreact": "html"
+  },
+  
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/vendor": true,
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/storage/logs": true,
+    "**/storage/framework/cache": true,
+    "**/storage/framework/sessions": true,
+    "**/storage/framework/views": true
+  },
+  
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/vendor": true,
+    "**/storage": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/build": true
+  },
+  
+  "terminal.integrated.env.windows": {
+    "COMPOSER_MEMORY_LIMIT": "-1"
+  },
+  
+  "terminal.integrated.cwd": "${workspaceFolder}",
+  
+  "[php]": {
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
+}
