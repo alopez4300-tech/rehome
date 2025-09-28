@@ -28,8 +28,11 @@ bash scripts/dev-setup.sh
 
 ### 3. Daily Development Start
 ```bash
-# Quick startup (both backend + frontend)
+# Quick startup (backend + frontend)
 bash scripts/dev-start.sh
+
+# Include Storybook for component development
+bash scripts/dev-start.sh --storybook
 ```
 
 **OR manually:**
@@ -39,6 +42,9 @@ cd backend && composer run dev
 
 # Terminal 2 - Frontend  
 cd frontend && pnpm dev
+
+# Terminal 3 - Storybook (optional)
+cd frontend && pnpm storybook
 ```
 
 ### 4. Access Your Application
@@ -84,9 +90,10 @@ cd frontend
 pnpm install                  # Install Node packages
 
 # Development
-pnpm dev                      # Next.js server
+pnpm dev                      # Next.js server (http://localhost:3000)
 pnpm build                    # Production build
-pnpm storybook               # Component development
+pnpm storybook               # Component development (http://localhost:6006)
+pnpm storybook:ci            # Build Storybook for CI
 
 # Code Quality
 pnpm lint                     # Biome linting

@@ -2,31 +2,39 @@
 
 Full-stack project management application built with Laravel + Next.js.
 
-## 🚀 Quick Start
+## 🚀 Quickstart
+
+### 1. Setup (one-time)
+```bash
+bash scripts/dev-setup.sh
+```
+
+### 2. Daily Development
+
+```bash
+# Start backend + frontend
+bash scripts/dev-start.sh
+
+# Start backend + frontend + Storybook
+bash scripts/dev-start.sh --storybook
+```
+
+### 3. Access your app
+
+* **Backend API:** [http://localhost:8000](http://localhost:8000)
+* **Frontend:** [http://localhost:3000](http://localhost:3000)
+* **Storybook:** [http://localhost:6006](http://localhost:6006) (when run with `--storybook`)
+* **Admin Panel:** [http://localhost:8000/admin](http://localhost:8000/admin)
+
+---
+
+📌 **Note:**
+
+* Always run these commands inside the **Ubuntu (WSL2) terminal**.
+* Never use PowerShell or CMD.
+* The scripts handle everything — migrations, dependencies, and server startup.
 
 **👉 [See DEVELOPMENT-WORKFLOW.md](./DEVELOPMENT-WORKFLOW.md) for complete setup instructions**
-
-### TL;DR for Developers
-
-1. **Open in WSL2:**
-   ```powershell
-   cd C:\Users\alope\Documents\rehome && code .
-   ```
-
-2. **Setup (Ubuntu terminal):**
-   ```bash
-   bash scripts/dev-setup.sh
-   ```
-
-3. **Start servers:**
-   ```bash
-   bash scripts/dev-start.sh
-   ```
-
-4. **Access:**
-   - Frontend: http://localhost:3000
-   - Backend: http://localhost:8000
-   - Admin: http://localhost:8000/admin
 
 ## 🛠️ Tech Stack
 
