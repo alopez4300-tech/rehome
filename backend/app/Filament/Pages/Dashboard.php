@@ -6,7 +6,7 @@ use Filament\Pages\Dashboard as BaseDashboard;
 
 class Dashboard extends BaseDashboard
 {
-    protected static ?string $title = 'Dashboard';
+    protected static ?string $title = 'Rehome Admin Dashboard';
     protected static ?string $navigationLabel = 'Dashboard';
     protected static ?string $navigationIcon = 'heroicon-o-home';
     
@@ -21,11 +21,4 @@ class Dashboard extends BaseDashboard
     {
         return 1;
     }
-}espace App\Filament\Pages;
-
-use Filament\Pages\Dashboard as BaseDashboard;
-
-class Dashboard extends BaseDashboard
-{
-    protected static ?string $title = 'Rehome Admin Dashboard';
 }

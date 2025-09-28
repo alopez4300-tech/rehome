@@ -1,89 +1,122 @@
-#!/bin/bash
-# Quick development server startup script
-# Run this after dev-setup.sh completes
-# Usage: bash scripts/dev-start.sh [--storybook]
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Check for storybook flag
-START_STORYBOOK=false
-if [[ "$1" == "--storybook" ]]; then
-    START_STORYBOOK=true
-fi
+# Default values
+STORYBOOK=false
+BACKEND_ONLY=false
+FRONTEND_ONLY=false
 
-echo "🚀 Starting Development Servers"
-if [ "$START_STORYBOOK" = true ]; then
-    echo "   (Including Storybook)"
-fi
-echo "==============================="
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --storybook)
+            STORYBOOK=true
+            shift
+            ;;
+        --backend-only)
+            BACKEND_ONLY=true
+            shift
+            ;;
+        --frontend-only)
+            FRONTEND_ONLY=true
+            shift
+            ;;
+        -h|--help)
+            echo "Usage: $0 [OPTIONS]"
+            echo ""
+            echo "Options:"
+            echo "  --storybook      Start Storybook along with other services"
+            echo "  --backend-only   Start only the Laravel backend"
+            echo "  --frontend-only  Start only the Next.js frontend"
+            echo "  -h, --help       Show this help message"
+            exit 0
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use -h or --help for usage information"
+            exit 1
+            ;;
+    esac
+done
 
-# Function to check if port is in use
-check_port() {
-    local port=$1
-    if command -v lsof >/dev/null 2>&1; then
-        if lsof -Pi :$port -sTCP:LISTEN -t >/dev/null 2>&1; then
-            echo "⚠️  Port $port is already in use"
-            return 1
-        fi
-    fi
-    return 0
+echo "🚀 Starting Rehome development servers..."
+
+# Function to start backend
+start_backend() {
+    echo "🟡 Starting Laravel backend on port 8000..."
+    cd backend
+    php artisan serve --host=0.0.0.0 --port=8000 &
+    BACKEND_PID=$!
+    cd ..
+    echo "Backend PID: $BACKEND_PID"
 }
 
-# Start backend in background
-echo "Starting Laravel backend..."
-if check_port 8000; then
-    cd backend
-    composer run dev &
-    BACKEND_PID=$!
-    echo "✅ Backend started (PID: $BACKEND_PID) - http://localhost:8000"
-    cd ..
-else
-    echo "Skipping backend startup"
-fi
-
-# Wait a moment for backend to start
-sleep 2
-
-# Start frontend in background
-echo "Starting Next.js frontend..."
-if check_port 3000; then
+# Function to start frontend
+start_frontend() {
+    echo "🔵 Starting Next.js frontend on port 3000..."
     cd frontend
     pnpm dev &
     FRONTEND_PID=$!
-    echo "✅ Frontend started (PID: $FRONTEND_PID) - http://localhost:3000"
     cd ..
-else
-    echo "Skipping frontend startup"
-fi
+    echo "Frontend PID: $FRONTEND_PID"
+}
 
-# Start Storybook if requested
-if [ "$START_STORYBOOK" = true ]; then
-    echo "Starting Storybook..."
-    if check_port 6006; then
-        cd frontend
-        pnpm storybook &
-        STORYBOOK_PID=$!
-        echo "✅ Storybook started (PID: $STORYBOOK_PID) - http://localhost:6006"
-        cd ..
-    else
-        echo "Skipping Storybook startup (port 6006 in use)"
+# Function to start storybook
+start_storybook() {
+    echo "📚 Starting Storybook on port 6006..."
+    cd frontend
+    pnpm storybook &
+    STORYBOOK_PID=$!
+    cd ..
+    echo "Storybook PID: $STORYBOOK_PID"
+}
+
+# Trap to kill background processes on exit
+cleanup() {
+    echo ""
+    echo "🛑 Shutting down services..."
+    if [ ! -z "${BACKEND_PID:-}" ]; then
+        kill $BACKEND_PID 2>/dev/null || true
+    fi
+    if [ ! -z "${FRONTEND_PID:-}" ]; then
+        kill $FRONTEND_PID 2>/dev/null || true
+    fi
+    if [ ! -z "${STORYBOOK_PID:-}" ]; then
+        kill $STORYBOOK_PID 2>/dev/null || true
+    fi
+    exit 0
+}
+trap cleanup SIGINT SIGTERM
+
+# Start services based on flags
+if [ "$BACKEND_ONLY" = true ]; then
+    start_backend
+elif [ "$FRONTEND_ONLY" = true ]; then
+    start_frontend
+else
+    start_backend
+    start_frontend
+    
+    if [ "$STORYBOOK" = true ]; then
+        start_storybook
     fi
 fi
 
 echo ""
-echo "🎉 Development servers are starting up!"
-echo "======================================="
+echo "✅ Services started!"
 echo ""
-echo "📱 Access your application:"
-echo "  • Frontend: http://localhost:3000"
-echo "  • Backend API: http://localhost:8000"  
-echo "  • Admin Panel: http://localhost:8000/admin"
-if [ "$START_STORYBOOK" = true ]; then
-    echo "  • Storybook: http://localhost:6006"
+echo "📍 Service URLs:"
+if [ "$FRONTEND_ONLY" = false ]; then
+    echo "  🟡 Laravel Backend: http://localhost:8000"
+fi
+if [ "$BACKEND_ONLY" = false ]; then
+    echo "  🔵 Next.js Frontend: http://localhost:3000"
+fi
+if [ "$STORYBOOK" = true ]; then
+    echo "  📚 Storybook: http://localhost:6006"
 fi
 echo ""
-echo "🛑 To stop servers:"
-echo "  Press Ctrl+C or run: killall php node"
-echo ""
-echo "📊 To view logs, check the terminal output above"
+echo "Press Ctrl+C to stop all services"
 
-# Keep script running to show output
+# Wait for background processes
 wait

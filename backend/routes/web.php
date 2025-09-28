@@ -21,3 +21,6 @@ Route::get('/', function () {
 // Sanctum provides /sanctum/csrf-cookie automatically
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
+// Filament admin panel routes are handled automatically by FilamentServiceProvider
+// No manual admin routes needed - Filament will register /admin, /admin/login, etc.

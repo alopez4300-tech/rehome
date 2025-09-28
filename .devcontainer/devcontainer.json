@@ -1,9 +1,47 @@
 {
-  "name": "rehome",
+  "name": "Rehome (Laravel + Next.js + Storybook)",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
   "features": {
     "ghcr.io/devcontainers/features/node:1": { "version": "20" },
-    "ghcr.io/devcontainers/features/php:1": { "version": "8.3" }
+    "ghcr.io/devcontainers/features/php:1": {
+      "version": "8.3",
+      "installComposer": true
+    },
+    "ghcr.io/devcontainers/features/git:1": {}
   },
-  "postCreateCommand": "cd frontend && pnpm install && cd ../backend && composer install",
-  "forwardPorts": [3000, 8000, 6006]
+  "remoteUser": "vscode",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true
+      },
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "bmewburn.vscode-intelephense-client",
+        "ms-azuretools.vscode-docker"
+      ]
+    }
+  },
+
+  "forwardPorts": [8000, 3000, 6006, 5173],
+  "portsAttributes": {
+    "8000": { "label": "Laravel API / Admin" },
+    "3000": { "label": "Next.js" },
+    "6006": { "label": "Storybook" },
+    "5173": { "label": "Vite (Laravel)" }
+  },
+
+  "containerEnv": {
+    "APP_ENV": "local",
+    "NODE_ENV": "development"
+  },
+
+  "postCreateCommand": "bash -lc 'npm i -g pnpm && chmod +x scripts/*.sh || true && bash scripts/dev-setup.sh'",
+
+  "onCreateCommand": "",
+  "postStartCommand": "",
+
+  "updateContentCommand": "bash -lc 'chmod +x scripts/*.sh || true'"
 }

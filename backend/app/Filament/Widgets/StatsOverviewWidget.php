@@ -13,6 +13,7 @@ class StatsOverviewWidget extends BaseWidget
         try {
             $userCount = User::count();
         } catch (\Exception $e) {
+            // If there's any database issue, return 0 instead of throwing
             $userCount = 0;
         }
 
