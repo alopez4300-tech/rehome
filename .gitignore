@@ -1,1 +1,24 @@
-node_modules
+# OS/IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Environment
+.env
+.env.*
+
+# PHP/Laravel
+/vendor/
+/storage/*.key
+/public/storage
+/bootstrap/cache/*.php
+
+# Node/Next.js
+node_modules/
+/.pnpm-store/
+/.next/
+dist/
+coverage/
+
+# Logs
+*.log
