@@ -1,0 +1,60 @@
+# Development Dockerfile for Laravel Backend
+FROM php:8.3-fpm-alpine
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Install system dependencies
+RUN apk add --no-cache \
+    build-base \
+    libpng-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    libzip-dev \
+    zip \
+    unzip \
+    git \
+    curl \
+    oniguruma-dev \
+    icu-dev \
+    sqlite \
+    sqlite-dev
+
+# Install PHP extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+        gd \
+        pdo \
+        pdo_mysql \
+        pdo_sqlite \
+        zip \
+        intl \
+        mbstring \
+        opcache
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Install PHP development tools
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
+# Copy PHP configuration
+COPY docker/php.dev.ini /usr/local/etc/php/conf.d/php.ini
+
+# Set user and group
+RUN addgroup -g 1000 -S www && \
+    adduser -u 1000 -S www -G www
+
+# Create required directories
+RUN mkdir -p /var/www/html/storage/logs \
+    && mkdir -p /var/www/html/bootstrap/cache \
+    && chown -R www:www /var/www/html
+
+USER www
+
+# Expose port
+EXPOSE 8000
+
+# Default command
+CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
