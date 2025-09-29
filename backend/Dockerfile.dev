@@ -35,9 +35,12 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Install PHP development tools
-RUN pecl install xdebug \
-    && docker-php-ext-enable xdebug
+# Install PHP development tools (temporary build deps for pecl/phpize)
+RUN set -eux; \
+    apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS linux-headers; \
+    pecl install xdebug; \
+    docker-php-ext-enable xdebug; \
+    apk del --no-network .phpize-deps
 
 # Copy PHP configuration
 COPY docker/php.dev.ini /usr/local/etc/php/conf.d/php.ini

@@ -7,13 +7,16 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./backend:/var/www/html
-      - backend_vendor:/var/www/html/vendor
-      - backend_storage:/var/www/html/storage
+      - ./backend/vendor:/var/www/html/vendor
+      - ./backend/storage:/var/www/html/storage
+      - ./backend/.env:/var/www/html/.env
     environment:
       - APP_ENV=local
       - APP_DEBUG=true
       - APP_KEY=base64:your-app-key-here
       - COMPOSER_ALLOW_SUPERUSER=1
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     command: php artisan serve --host=0.0.0.0 --port=8000
 
   # Next.js Frontend - Development Configuration  
@@ -49,5 +52,4 @@ services:
       - rehome
 
 volumes:
-  backend_vendor:
   frontend_node_modules:
