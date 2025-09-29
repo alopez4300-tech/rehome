@@ -25,12 +25,14 @@
     }
   },
 
-  "forwardPorts": [8000, 3000, 6006, 5173],
+  "forwardPorts": [8000, 3000, 6006, 5173, 8080, 8025],
   "portsAttributes": {
     "8000": { "label": "Laravel API / Admin" },
     "3000": { "label": "Next.js" },
     "6006": { "label": "Storybook" },
-    "5173": { "label": "Vite (Laravel)" }
+    "5173": { "label": "Vite (Laravel)" },
+    "8080": { "label": "PhpMyAdmin" },
+    "8025": { "label": "Mailhog" }
   },
 
   "containerEnv": {
@@ -38,7 +40,7 @@
     "NODE_ENV": "development"
   },
 
-  "postCreateCommand": "bash -lc 'npm i -g pnpm && chmod +x scripts/*.sh || true && bash scripts/dev-setup.sh'",
+  "postCreateCommand": "bash -lc 'npm i -g pnpm && chmod +x scripts/*.sh || true && echo \"🐳 Docker setup available: bash scripts/docker-setup.sh\"'",
 
   "onCreateCommand": "",
   "postStartCommand": "",
